@@ -1,0 +1,65 @@
+@mixin make-container() {
+  %grid-container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .container,
+  .container-fluid {
+    @extend %grid-container;
+  }
+
+  @each $breakpoint, $max-width in $container-max-widths {
+    @include media-breakpoint-up($breakpoint) {
+      .container {
+        max-width: $max-width;
+      }
+    }
+  }
+}
+
+@mixin make-row() {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+}
+
+@mixin make-grid() {
+  %grid-column {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $infix: if(map-get($grid-breakpoints, $breakpoint) == 0, '', '-#{$breakpoint}');
+
+    @for $i from 1 through $grid-columns {
+      .col#{$infix}-#{$i} {
+        @extend %grid-column;
+      }
+    }
+
+    @include media-breakpoint-up($breakpoint) {
+      @for $i from 1 through $grid-columns {
+        .col#{$infix}-#{$i} {
+          flex: 0 0 percentage($i / $grid-columns);
+          max-width: percentage($i / $grid-columns);
+        }
+      }
+
+      @for $i from 1 through $grid-columns {
+        .offset#{$infix}-#{$i} {
+          margin-left: percentage($i / $grid-columns);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "frameworks.css",
+  "version": "1.0.0",
+  "description": "A minimal implementation of the Flexbox Grid System",
+  "scripts": {
+    "lint": "stylelint \"src/**/*\"",
+    "compile": "node-sass --output-style expanded src/frameworks.scss build/frameworks.css",
+    "prefix": "postcss use autoprefixer --replace \"build/frameworks.css\"",
+    "minify": "cleancss --output build/frameworks.min.css build/frameworks.css",
+    "build": "npm run lint && npm run compile && npm run prefix && npm run minify",
+    "start": "npx http-server -o & nodemon --watch src/ --ext scss --exec \"npm run build\""
+  },
+  "author": "iamplex",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^9.5.0",
+    "clean-css-cli": "^4.2.1",
+    "node-sass": "^4.10.0",
+    "nodemon": "^1.18.7",
+    "postcss-cli": "^6.1.2",
+    "stylelint": "^10.0.1",
+    "stylelint-config-recommended-scss": "^3.3.0",
+    "stylelint-scss": "^3.6.1"
+  }
+}
